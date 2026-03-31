@@ -1,0 +1,27 @@
+﻿version: '3.8'
+services:
+  bgc-pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bgc-discovery:latest
+    container_name: bgc-discovery-pipeline
+    volumes:
+      - ./data:/workspace/data
+      - ./models:/workspace/models
+      - ./results:/workspace/results
+      - ./databases:/workspace/databases
+      - ./scripts:/workspace/scripts
+      - ./logs:/workspace/logs
+    stdin_open: true
+    tty: true
+    working_dir: /workspace
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+    command: /bin/bash
